@@ -4,6 +4,7 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
 const AI = new GoogleGenAI({apiKey: GOOGLE_API_KEY});
 
 module.exports = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -17,7 +18,6 @@ module.exports = async (req, res) => {
     if (type) {
         if (type == "LLM-msg") {
             try {
-
                 res.setHeader("Content-Type", "text/event-stream");
                 res.setHeader("Cache-Control", "no-cache");
                 res.setHeader("Connection", "keep-alive");
