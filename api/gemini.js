@@ -1,7 +1,7 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI  } from "@google/genai";
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
-const AI = new GoogleGenAI({apiKey: GOOGLE_API_KEY});
+const AI = new GoogleGenerativeAI({apiKey: GOOGLE_API_KEY});
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
