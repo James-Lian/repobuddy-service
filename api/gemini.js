@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
                 }
                 res.end();
             } catch (e) {
-                res.status(500).json({ error: "Server error." })   
+                res.status(500).json({ error: "Server error.", content: e })   
             }
         }
     }
