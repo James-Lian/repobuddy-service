@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
     const content = req.body;
 
-    if (content.request == "repo-paths") {
+    if (content.requestType == "repo-paths") {
         let branch;
         if (!content.branch) {
             const { data: repoData } = await octokit.repos.get({ owner, repo });
