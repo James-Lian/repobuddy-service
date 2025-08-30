@@ -18,4 +18,24 @@ module.exports = async (req, res) => {
 
     const content = req.body;
 
+    if (content.request == "repo-paths") {
+        let branch;
+        if (!content.branch) {
+            const { data: repoData } = await octokit.repos.get({ owner, repo });
+            branch = repoData.default_branch;
+        }
+
+        const { data: treeData } = await octokit.git.getTree({
+            owner: content.owner,
+            repo: content.repo,
+            tree_sha: branch,
+            recursive: "1"
+        })
+
+        const files = treeData.tree
+            .filter(item => item.type === "blob")
+            .map(item => item.path)
+        
+        res.status(200).json({ content: files });
+    }
 }
