@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@google/genai": "^1.15.0"
+    "@google/genai": "^1.15.0",
+    "octokit": "^5.0.3"
   }
 }
