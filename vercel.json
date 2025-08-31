@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/**/*.js": {
-      "includeFiles": ["node_modules/@google/genai/**", "node_modules/@octokit/**"]
+      "includeFiles": "node_modules/@google/genai/**"
     }
   }
 }
