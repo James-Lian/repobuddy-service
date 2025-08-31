@@ -33,10 +33,14 @@ export default async function handler(req, res) {
             recursive: "1"
         })
 
+        console.log(treeData);
+
         const files = treeData.tree
             .filter(item => item.type === "blob")
             .map(item => item.path)
         
+        console.log(files);
+
         res.status(200).json({ content: files });
     }
 }
