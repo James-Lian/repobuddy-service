@@ -1,7 +1,10 @@
 {
   "functions": {
-    "api/**/*.js": {
+    "api/gemini.js": {
       "includeFiles": "node_modules/@google/genai/**"
+    },
+    "api/githubInfo.js": {
+      "includeFiles": "node_modules/@octoki/**"
     }
   }
 }
