@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 const GOOGLE_API_KEY = process.env.GEMINI_KEY
 const AI = new GoogleGenAI({apiKey: GOOGLE_API_KEY});
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
