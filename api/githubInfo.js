@@ -8,7 +8,7 @@ import { Octokit } from "@octokit/rest";
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY})
 
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', "https://github.com")
+    res.setHeader('Access-Control-Allow-Origin', "https://github.com");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     if (content.requestType == "repo-paths") {
         let branch;
         if (!content.branch) {
-            const { data: repoData } = await octokit.repos.get({ owner, repo });
+            const { data: repoData } = await octokit.repos.get({ owner: content.owner, repo: content.repo });
             branch = repoData.default_branch;
         }
 
