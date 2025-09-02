@@ -42,7 +42,8 @@ export default async function handler(req, res) {
             fileData[item.path] = {"sha": item.sha}
             if (item.size) {
                 fileData[item.path]["size"] = item.size;
-
+                console.log("Wait what");
+                console.log(content.owner);
                 const { data: blobData } = await octokit.git.getBlob({
                     owner: content.owner,
                     repo: content.repo,
