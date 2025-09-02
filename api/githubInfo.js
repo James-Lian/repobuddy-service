@@ -47,7 +47,7 @@ export default async function handler(req, res) {
                 const { data: blobData } = await octokit.git.getBlob({
                     owner: content.owner,
                     repo: content.repo,
-                    file_sha: SHA,
+                    file_sha: item.sha,
                 })
                 const blob = blobData.content;
                 fileData[item.path]["encoding"] = blob.encoding;
