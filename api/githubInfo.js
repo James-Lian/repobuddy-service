@@ -35,12 +35,23 @@ export default async function handler(req, res) {
 
         console.log(treeData);
 
+        
+        const fullFileData = treeData.tree
+            .filter(item => item.type === "blob")
+
+        let fileData = {}
+        
+        for (let item of fullFileData) {
+            fileData[item.path] = {"sha": item.sha}
+            if (item.size) {
+                fileData[item.path]["size"] = item.size;
+            }
+        }
+
         const files = treeData.tree
             .filter(item => item.type === "blob")
             .map(item => item.path)
-        
-        console.log(files);
 
-        res.status(200).json({ data: files });
+        res.status(200).json({ filepaths: files, additionalData: fileData });
     }
 }
