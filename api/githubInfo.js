@@ -32,9 +32,6 @@ export default async function handler(req, res) {
             tree_sha: branch,
             recursive: "1"
         })
-
-        console.log(treeData);
-
         
         const fullFileData = treeData.tree
             .filter(item => item.type === "blob")
@@ -45,6 +42,14 @@ export default async function handler(req, res) {
             fileData[item.path] = {"sha": item.sha}
             if (item.size) {
                 fileData[item.path]["size"] = item.size;
+
+                const { data: blobData } = await octokit.git.getBlob({
+                    owner: owner,
+                    repo: repo,
+                    file_sha: SHA,
+                })
+                const blob = blobData.content;
+                fileData[item.path]["encoding"] = blob.encoding;
             }
         }
 
