@@ -2,6 +2,7 @@
   "type": "module",
   "dependencies": {
     "@google/genai": "^1.15.0",
-    "@octokit/rest": "^22.0.0"
+    "@octokit/rest": "^22.0.0",
+    "conjugation-fr": "^0.3.4"
   }
 }

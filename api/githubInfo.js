@@ -4,6 +4,7 @@
 // Step 4: User action: retrieve file contents
 
 import { Octokit } from "@octokit/rest";
+import conjugationFr from 'conjugation-fr';
 
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY})
 
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
 
     const content = req.body;
 
-    if (content.requestType == "repo-paths") {
+    if (content.requestType === "repo-paths") {
         let branch;
         if (!content.branch) {
             const { data: repoData } = await octokit.repos.get({ owner: content.owner, repo: content.repo });
@@ -50,5 +51,21 @@ export default async function handler(req, res) {
             .map(item => item.path)
 
         res.status(200).json({ filepaths: files, additionalData: fileData });
+    } else if (content.requestType === "file-contents") {
+        const contents = []
+        for (let path of content.files) {
+
+            const { data: contentsData } = await octokit.repos.getContent({
+                owner: content.owner,
+                repo: content.repo,
+                path: path
+            });
+
+            // Buffer is for Node.js and is preferred way for base64 to utf-8, atob/btoa may mishandle utf-8 and is typically for browser-only applications
+            const fileContent = Buffer.from(contentsData.content, "base64").toString();
+            contents.push(fileContent);
+        }
+
+        res.status(200).json({ data: fileContent });
     }
 }
