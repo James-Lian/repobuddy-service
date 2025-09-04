@@ -9,6 +9,8 @@ import conjugationFr from 'conjugation-fr';
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY})
 
 export default async function handler(req, res) {
+    console.log(console.log(conjugationFr.conjugate("aimer", "indicative", "present")))
+
     res.setHeader('Access-Control-Allow-Origin', "https://github.com");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
