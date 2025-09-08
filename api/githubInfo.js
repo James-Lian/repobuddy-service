@@ -4,7 +4,6 @@
 // Step 4: User action: retrieve file contents
 
 import { Octokit } from "@octokit/rest";
-import conjugationFr from 'conjugation-fr';
 
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY})
 
@@ -64,10 +63,28 @@ export default async function handler(req, res) {
             });
 
             // Buffer is for Node.js and is preferred way for base64 to utf-8, atob/btoa may mishandle utf-8 and is typically for browser-only applications
-            const fileContent = Buffer.from(contentsData.content, "base64").toString();
-            contents.push(fileContent);
+            const fileContentsString = Buffer.from(contentsData.content, "base64").toString();
+            contents.push({ "path": path, "content": fileContentsString });
         }
 
-        res.status(200).json({ data: fileContent });
+        res.status(200).json({"content": contents});
+    } else if (content.requestType === "readme") {
+        try {
+            const { data: readmeData } = await octokit.repos.getReadme({
+                owner: content.owner,
+                repo: content.repo
+            });
+    
+            const content = Buffer.from(readmeData, 'base64').toString('utf-8');
+    
+            res.status(200).json({ "readme": content });
+        } catch (e) {
+            if (e.status === 404) {
+                res.status(404).json({ "error": `Resource not found: The GitHub repository ${content.owner}/${content.repo} doesn't have a README.` });
+            }
+            else {
+                res.status(500).json({"error": e.message});
+            }
+        }
     }
 }
