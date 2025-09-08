@@ -73,9 +73,9 @@ export default async function handler(req, res) {
                 repo: content.repo
             });
     
-            const content = Buffer.from(readmeData, 'base64').toString('utf-8');
+            const readmeContent = Buffer.from(readmeData, 'base64').toString('utf-8');
     
-            res.status(200).json({ "readme": content });
+            res.status(200).json({ "readme": readmeContent });
         } catch (e) {
             if (e.status === 404) {
                 res.status(404).json({ "error": `Resource not found: The GitHub repository ${content.owner}/${content.repo} doesn't have a README.` });
